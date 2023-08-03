@@ -1,10 +1,11 @@
 {
   "name": "remark-d2",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A remark plugin for compiling d2 code blocks in markdown",
   "main": "./index.js",
   "type": "module",
   "scripts": {
+    "pretest": "rm -rf static",
     "test": "node test/index.test.js"
   },
   "repository": {
@@ -14,7 +15,10 @@
   "keywords": [
     "remark",
     "remark-plugin",
-    "d2"
+    "d2",
+    "plantuml",
+    "mermaid",
+    "graphviz"
   ],
   "author": "Gaurav Bhatnagar",
   "license": "MIT",

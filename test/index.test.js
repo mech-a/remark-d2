@@ -3,7 +3,7 @@ import remarkD2 from "../index.js";
 import * as fs from "node:fs";
 import { VFile } from "vfile";
 
-const fPath = "test/resources/example.md";
+const fPath = "test/resources/multi.md";
 
 const file = new VFile({
   path: fPath,
