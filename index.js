@@ -8,6 +8,7 @@ import { existsSync, mkdirSync } from "node:fs";
 const DEFAULT_OPTIONS = {
   compilePath: "static/d2",
   ext: "svg",
+  linkPath: "/d2",
 };
 
 /**
@@ -29,9 +30,13 @@ const DEFAULT_OPTIONS = {
  *
  * `![](static/d2/some/relative/path/0.svg)`
  *
- * @param {Object} opts Plugin options accepting `d2Path` and `d2Ext`
+ * @param {Object} opts Plugin options
  *
- * `d2Path` is by default `static/d2` (for Docusaurus) and `d2Ext` is by default `svg`
+ * `compilePath` -- where compiled d2 paths are, default: `static/d2`
+ *
+ * `ext` -- d2 export file type, default: `svg` (note `png` is significantly slower)
+ *
+ * `linkPath` -- prepended path before image file when making URL for markdown, e.g. `linkPath: /path/a` -> `[](/path/a/0.svg)`. default: `/d2`
  *
  * @returns Modified AST
  */
@@ -59,14 +64,14 @@ export default function remarkD2(opts) {
       const { lang, value } = node;
       if (!lang || lang !== "d2") return;
 
-      const imgPath = path.join(imgDir, `${count++}.${opts.ext}`);
+      const imgCompilePath = path.join(imgDir, `${count++}.${opts.ext}`);
 
-      const d2 = spawn("d2", ["-", `${imgPath}`]);
+      const d2 = spawn("d2", ["-", `${imgCompilePath}`]);
       d2.stdin.write(value);
       d2.stdin.end();
 
       node.type = "image";
-      node.url = imgPath;
+      node.url = path.join(opts.linkPath, `${count}.${opts.ext}`);
     });
     return tree;
   };
