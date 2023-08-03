@@ -122,6 +122,15 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+# vscode
+.vscode
+
+# local compiles
+static
+
+# macos
+.DS_STORE
+
 # yarn v2
 .yarn/cache
 .yarn/unplugged
