@@ -93,6 +93,8 @@ describe("remark-d2", function () {
         "markdown replacement correct",
       );
     });
+
+    it("should error cleanly if d2 not installed");
   });
 });
 
