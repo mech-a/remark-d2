@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "pretest": "rm -rf static",
-    "test": "node test/index.test.js"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",

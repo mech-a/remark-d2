@@ -16,16 +16,16 @@ Anything here should not be touched.
 
 This should be rendered as item 0:
 
-![](static/d2/test/resources/multi/0.png)
+![](/a/link/path/test/resources/multi/0.svg)
 
 ## Another d2 code block
 
 This should be rendered as item 1:
 
-![](static/d2/test/resources/multi/1.png)
+![](/a/link/path/test/resources/multi/1.svg)
 
 ## A copy of the previous block
 
 This should be rendered as item 2, even though it's the same as item 1:
 
-![](static/d2/test/resources/multi/2.png)
+![](/a/link/path/test/resources/multi/2.svg)

@@ -5,7 +5,7 @@ import { spawn } from "node:child_process";
 import path from "node:path";
 import { existsSync, mkdirSync } from "node:fs";
 
-const DEFAULT_OPTIONS = {
+export const DEFAULT_OPTIONS = {
   blockLang: "d2",
   compilePath: "static/d2",
   ext: "svg",
