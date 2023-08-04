@@ -20,7 +20,7 @@
     "mermaid",
     "graphviz"
   ],
-  "author": "Gaurav Bhatnagar",
+  "author": "Gaurav Bhatnagar <gbhatnagar2013@gmail.com> (http://gbhat.net)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mech-a/remark-d2/issues"

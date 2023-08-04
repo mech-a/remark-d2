@@ -6,10 +6,10 @@ import path from "node:path";
 import { existsSync, mkdirSync } from "node:fs";
 
 export const DEFAULT_OPTIONS = {
-  blockLang: "d2",
   compilePath: "static/d2",
   ext: "svg",
   linkPath: "/d2",
+  blockLang: "d2",
 };
 
 /**
@@ -36,14 +36,14 @@ export const DEFAULT_OPTIONS = {
  *
  * @param {Object} opts Plugin options
  *
- * `blockLang` -- which block lang will get replaced, default: `d2`
- *
  * `compilePath` -- where compiled d2 paths are, default: `static/d2`
  *
  * `ext` -- d2 export file type, default: `svg` (note: `png` is slower)
  *
- * `linkPath` -- dir prepended to relative file path when constructing image URL for markdown,
+ * `linkPath` -- path prepended to relative file path when constructing image URL for markdown,
  * e.g. `linkPath: /path/ex/` -> `[](/path/ex/some/relative/path/0.svg)`. default: `/d2`
+ *
+ * `blockLang` -- which block lang will get replaced, default: `d2`
  *
  * @returns Modified AST
  */
