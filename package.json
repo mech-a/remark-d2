@@ -1,6 +1,6 @@
 {
   "name": "remark-d2",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A remark plugin for compiling d2 code blocks in markdown",
   "main": "./index.js",
   "type": "module",
