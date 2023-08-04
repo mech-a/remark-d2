@@ -15,11 +15,14 @@ export const DEFAULT_OPTIONS = {
 /**
  * Plugin for remark that replaces d2 code blocks with compiled d2 images.
  *
- * It creates a directory `${compilePath}/relative path from process.cwd to md file`
- * and creates files named `0.${ext}` in that directory. **It expects a `VFile` with `path`
- * defined and will not behave as expected if it is not defined.**
+ * **NOTE: remarkD2 expects a `VFile` with `path` defined and will not behave as expected if it is not defined.**
  *
- * It replaces the code blocks with language `d2` into image links:
+ * `remarkD2` creates a directory `${compilePath}/relative path from process.cwd() to md file`.
+ * The relative path includes the name of the markdown file itself, but not the extension.
+ * Then, it compiles and saves all d2 diagrams with the specified extension `ext` in that directory. It will then replace
+ * the code blocks with a Image nodes: `![](${linkPath}/relative path from process.cwd() to md file/0.${ext})`
+ *
+ * For example, assuming we have a file `some/path/ex.md` containing:
  *
  * \```d2
  *
@@ -27,9 +30,9 @@ export const DEFAULT_OPTIONS = {
  *
  * \```
  *
- * Is compiled into a file static/d2/some/relative/path/0.svg, and the code block becomes:
+ * `remarkD2` compiles this into a file static/d2/some/path/ex/0.svg, and the code block becomes:
  *
- * `![](/d2/some/relative/path/0.svg)`
+ * `![](/d2/a/path/ex/0.svg)`
  *
  * @param {Object} opts Plugin options
  *
@@ -46,44 +49,39 @@ export const DEFAULT_OPTIONS = {
  */
 export default function remarkD2(opts) {
   opts = { ...DEFAULT_OPTIONS, ...opts };
+  opts.compilePath = path.normalize(opts.compilePath);
+  opts.linkPath = path.normalize(opts.linkPath);
 
   return function transformer(tree, file) {
-    // number of d2 images
     let count = 0;
-
-    let imgDir = opts.compilePath;
-    let fPath = "";
+    let relDir = "";
     if (file.path !== undefined || file.path !== null) {
       const { dir, name } = path.parse(file.path);
-      fPath = path.join(dir, name);
-      if (path.isAbsolute(file.path)) {
-        // convert to relative
-        imgDir = path.join(imgDir, path.relative(process.cwd(), fPath));
-      } else {
-        imgDir = path.join(imgDir, fPath);
-      }
+      relDir = path.join(dir, name);
+      relDir = path.isAbsolute(file.path)
+        ? path.relative(process.cwd(), relDir)
+        : relDir;
     }
+    relDir = path.normalize(relDir);
+    const compileDir = path.join(opts.compilePath, relDir);
+    const linkDir = path.join(opts.linkPath, relDir);
 
-    if (!existsSync(imgDir)) {
-      mkdirSync(imgDir, { recursive: true });
+    if (!existsSync(compileDir)) {
+      mkdirSync(compileDir, { recursive: true });
     }
 
     visit(tree, "code", (node) => {
       const { lang, value } = node;
       if (!lang || lang !== opts.blockLang) return;
 
-      const imgCompilePath = path.join(imgDir, `${count}.${opts.ext}`);
+      const image = `${count}.${opts.ext}`;
 
-      const d2 = spawn("d2", ["-", `${imgCompilePath}`]);
+      const d2 = spawn("d2", ["-", `${path.join(compileDir, image)}`]);
       d2.stdin.write(value);
       d2.stdin.end();
 
       node.type = "image";
-      const urlPath = path.join(
-        opts.linkPath,
-        path.relative(process.cwd(), fPath),
-        `${count}.${opts.ext}`,
-      );
+      const urlPath = path.join(linkDir, image);
       node.url = urlPath;
       count++;
     });
