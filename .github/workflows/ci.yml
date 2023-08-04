@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - run: curl -fsSL https://d2lang.com/install.sh | sh -s --
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
