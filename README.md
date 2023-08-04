@@ -1,8 +1,8 @@
 # remark-d2
 
+![](https://github.com/mech-a/remark-d2/actions/workflows/ci.yml/badge.svg)
+
 A remark plugin for compiling d2 code blocks in Markdown files, allowing you to do this:
-
-
 
 ## Installation
 
