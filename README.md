@@ -6,9 +6,9 @@ A [remark](https://github.com/remarkjs/remark) plugin that turns [d2](https://gi
 
 ## Installation
 
-Ensure that you have [d2](https://github.com/terrastruct/d2) installed and accessible on your `PATH`. Then, install using your favorite package manager, install the plugin:
+Ensure that you have [d2](https://github.com/terrastruct/d2) installed and accessible on your `PATH`. Then, install using your favorite package manager:
 
-`npm i -D @mech-a/remark-d2`
+`npm install remark-d2`
 
 ## Usage
 
