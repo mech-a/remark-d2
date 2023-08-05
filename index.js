@@ -9,7 +9,6 @@ export const DEFAULT_OPTIONS = {
   compilePath: "static/d2",
   ext: "svg",
   linkPath: "/d2",
-  blockLang: "d2",
 };
 
 /**
@@ -43,7 +42,6 @@ export const DEFAULT_OPTIONS = {
  * `linkPath` -- path prepended to relative file path when constructing image URL for markdown,
  * e.g. `linkPath: /path/ex/` -> `[](/path/ex/some/relative/path/0.svg)`. default: `/d2`
  *
- * `blockLang` -- which block lang will get replaced, default: `d2`
  *
  * @returns Modified AST
  */
@@ -72,7 +70,7 @@ export default function remarkD2(opts) {
 
     visit(tree, "code", (node) => {
       const { lang, value } = node;
-      if (!lang || lang !== opts.blockLang) return;
+      if (!lang || lang !== "d2") return;
 
       const image = `${count}.${opts.ext}`;
 

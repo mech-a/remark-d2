@@ -22,7 +22,7 @@ import { readFileSync } from "node:fs";
 
 const file = new VFile({
   path: "docs/intro.md",
-  value: readFileSync("docs/intro.md")
+  value: readFileSync("docs/intro.md"),
 });
 
 const output = await remark().use(remarkD2).processSync(file);
@@ -77,9 +77,6 @@ Options can be passed in as a parameter in `.use`. They should be in an `Object`
   - Path prepended to the relative file path in the image URL
     - Useful if your build system removes the parent folder reference `assets/` or `static/`
   - default: `/d2`, compatible with Docusaurus
-- `blockLang`
-  - Code block language that will get replaced with d2
-  - default: `d2`
 
 ## Inspiration
 
