@@ -21,8 +21,8 @@ import { VFile } from "vfile";
 import { readFileSync } from "node:fs";
 
 const file = new VFile({
-  path: 'docs/intro.md`,
-  value: readFileSync('docs/intro.md')
+  path: "docs/intro.md",
+  value: readFileSync("docs/intro.md")
 });
 
 const output = await remark().use(remarkD2).processSync(file);
