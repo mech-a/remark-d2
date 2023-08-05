@@ -2,13 +2,13 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![](https://github.com/mech-a/remark-d2/actions/workflows/ci.yml/badge.svg)
 
-A [remark](https://github.com/remarkjs/remark) plugin for compiling [d2](https://github.com/terrastruct/d2) code blocks in Markdown files into diagrams.
+A [remark](https://github.com/remarkjs/remark) plugin that turns [d2](https://github.com/terrastruct/d2) code blocks into diagrams in Markdown files.
 
 ## Installation
 
-Ensure that you have [d2](https://github.com/terrastruct/d2) installed and accessible on your `PATH`. Then, install using your favorite package manager, install the plugin:
+Ensure that you have [d2](https://github.com/terrastruct/d2) installed and accessible on your `PATH`. Then, install using your favorite package manager:
 
-`npm i -D @mech-a/remark-d2`
+`npm install remark-d2`
 
 ## Usage
 
@@ -21,8 +21,8 @@ import { VFile } from "vfile";
 import { readFileSync } from "node:fs";
 
 const file = new VFile({
-  path: 'docs/intro.md`,
-  value: readFileSync('docs/intro.md')
+  path: "docs/intro.md",
+  value: readFileSync("docs/intro.md")
 });
 
 const output = await remark().use(remarkD2).processSync(file);
