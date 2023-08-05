@@ -4,6 +4,8 @@
 
 A [remark](https://github.com/remarkjs/remark) plugin that turns [d2](https://github.com/terrastruct/d2) code blocks into diagrams in Markdown files.
 
+https://github.com/mech-a/remark-d2/assets/11798509/e6c6276f-8839-46af-b29e-243f31cdce24
+
 ## Installation
 
 Ensure that you have [d2](https://github.com/terrastruct/d2) installed and accessible on your `PATH`. Then, install using your favorite package manager:
