@@ -79,6 +79,9 @@ Options can be passed in as a parameter in `.use`. They should be in an `Object`
   - Path prepended to the relative file path in the image URL
     - Useful if your build system removes the parent folder reference `assets/` or `static/`
   - default: `/d2`, compatible with Docusaurus
+- `defaultD2Opts`
+  - Options passed to d2 CLI. See `man d2` for more.
+  - default: `["-t=100", "--dark-theme=200"]`
 
 ## Inspiration
 
