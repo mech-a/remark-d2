@@ -9,7 +9,7 @@ import { execSync } from "node:child_process";
 describe("remark-d2", function () {
   describe("multi.md", function () {
     beforeEach(function () {
-      execSync("rm -rf static/");
+      execSync("rm -rf static");
     });
 
     it("should compile a file normally", function () {
@@ -28,6 +28,14 @@ describe("remark-d2", function () {
         fs.existsSync(path.join(DEFAULT_OPTIONS.compilePath, inputPathNoExt)),
         "image compile path exists",
       );
+
+      // TODO: why doesn't this work?
+      // assert.isTrue(
+      //   fs.existsSync(
+      //     path.join(DEFAULT_OPTIONS.compilePath, inputPathNoExt, "0.svg"),
+      //   ),
+      //   "image exists",
+      // );
 
       assert.strictEqual(
         sanitize(plugOutput),
@@ -94,7 +102,9 @@ describe("remark-d2", function () {
       );
     });
 
+    it("should announce error if d2 can't compile");
     it("should error cleanly if d2 not installed");
+    it("should not allow for an absolute compilePath unless unsafe is true");
   });
 });
 
