@@ -16,16 +16,16 @@ Anything here should not be touched.
 
 This should be rendered as item 0:
 
-![d2 diagram](/a/link/path/test/resources/multi/0.svg)
+<img alt="d2 diagram" src="/d2/test/resources/multi/0.svg" />
 
 ## Another d2 code block
 
 This should be rendered as item 1:
 
-![d2 diagram](/a/link/path/test/resources/multi/1.svg)
+<img alt="d2 diagram" src="/d2/test/resources/multi/1.svg" />
 
 ## A copy of the previous block
 
 This should be rendered as item 2, even though it's the same as item 1:
 
-![d2 diagram](/a/link/path/test/resources/multi/2.svg)
+<img alt="d2 diagram" src="/d2/test/resources/multi/2.svg" />

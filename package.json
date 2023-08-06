@@ -2,7 +2,7 @@
   "name": "remark-d2",
   "version": "0.2.0",
   "description": "A remark plugin for compiling d2 code blocks in markdown",
-  "main": "./index.js",
+  "main": "./src/index.js",
   "type": "module",
   "scripts": {
     "pretest": "rm -rf static",
