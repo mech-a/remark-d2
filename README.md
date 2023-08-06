@@ -6,6 +6,57 @@ A [remark](https://github.com/remarkjs/remark) plugin that turns [d2](https://gi
 
 https://github.com/mech-a/remark-d2/assets/11798509/e6c6276f-8839-46af-b29e-243f31cdce24
 
+## Features
+
+Fast resizing and titling: metadata tags like `width`, `position`, and `title` are compiled:
+
+<!-- prettier-ignore -->
+````md
+      ┎─────── abbrev. ───────┒
+```d2 w=150px;position=center;a="test"
+d2->is->fast
+```
+
+becomes:
+
+<img alt="test" position="center" width="150px" src="/d2/docs/features/0.svg" />
+````
+
+<details>
+<summary>All accepted metadata tags & abbreviations</summary>
+
+- `width`, `w`
+- `height`, `h`
+- `position`, `p`
+- `title`, `t`
+- `alt`, `a`
+
+</details>
+
+Change default d2 compile settings and default image attributes easily
+
+```js
+const output = await remark()
+  .use(remarkD2, {
+    defaultD2Opts: ["-t 101", "--dark-theme 200"],
+    //            "Orange Creamsicle" on light mode,
+    //               "Dark Mauve" on dark mode
+    defaultImageAttrs: {
+      title: "Wow, colors!",
+      alt: "Colorful Diagram",
+      width: "700px",
+    },
+  })
+
+  .processSync(file);
+```
+
+gets you
+
+<img alt="Colorful Diagram" title="Wow, colors!" width="700px" src="docs/defaults.svg" />
+
+Try changing color modes and see!
+
 ## Installation
 
 Ensure that you have [d2](https://github.com/terrastruct/d2) installed and accessible on your `PATH`. Then, install using your favorite package manager:
@@ -34,7 +85,7 @@ console.log(output.toString());
 
 ## Integrations
 
-If you are using this with [Docusaurus](https://docusaurus.io), as Docusaurus does not currently support [ES Modules](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/), follow [the workaround mentioned in the Docusaurus docs](https://docusaurus.io/docs/markdown-features/plugins#installing-plugins):
+remark-d2 is compatible with [Docusaurus](https://docusaurus.io) out of the box. However, as Docusaurus does not currently support [ES Modules](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/), to install remark-d2 follow [the workaround mentioned in the Docusaurus docs](https://docusaurus.io/docs/markdown-features/plugins#installing-plugins):
 
 ```js
 // in `docusaurus.config.js`
@@ -49,10 +100,10 @@ async function createConfig() {
     tagline: ...,
     presets: [ // install here or in plugin config
       [
-        '@docusaurus/preset-classic', // or any other
+        '@docusaurus/preset-classic', // or any other preset
         {
           docs: {
-            remarkPlugins; [d2],
+            remarkPlugins; [d2], // works out of the box
           },
         },
       ],
@@ -73,7 +124,7 @@ Options can be passed in as a parameter in `.use`. They should be in an `Object`
   - default: `static/d2`, compatible with Docusaurus
 - `ext`
   - File extension for d2 diagrams: currently only `svg` or `png`
-    - Note that `png` is slower
+    - Note that `png` is slower and does not support automatic light/dark mode
   - default: `svg`
 - `linkPath`
   - Path prepended to the relative file path in the image URL
@@ -82,6 +133,14 @@ Options can be passed in as a parameter in `.use`. They should be in an `Object`
 - `defaultD2Opts`
   - Options passed to d2 CLI. See `man d2` for more.
   - default: `["-t=100", "--dark-theme=200"]`
+- `htmlImage`
+  - If `true`, replace all code blocks with HTML `<img />` tags instead of Markdown images
+    - If a code block has metadata, regardless of `htmlImage`'s value, it will be an HTML image
+  - default: `false`
+- `defaultImageAttrs`
+  - Default attributes for images
+    - Only the keys `title` and `alt` apply to both Markdown and HTML images. All other attributes are only used if it is an HTML image.
+  - default: `{ alt: "d2 diagram" }`
 
 ## Inspiration
 

@@ -12,10 +12,27 @@ import { DEFAULT_OPTIONS } from "./defaults.js";
  *
  * **NOTE: remarkD2 expects a `VFile` with `path` defined and will not behave as expected if it is not defined.**
  *
+ * The d2 code block can contain metadata `width`, `height`, `position`, `title`, and `alt` (by default, `alt="d2 diagram"`)
+ * which will be added to the image in HTML form. Below shows the formatting and short hand, which is the first initial:
+ *
+ * ````
+ * ```d2 p=center;w=200px;t=double
+ * 1->2
+ * ```
+ * ````
+ *
+ * becomes
+ * ````
+ * <img alt="d2 diagram" position="center" width="200px" title="double" />
+ * ````
+ *
+ *
  * `remarkD2` creates a directory `${compilePath}/relative path from process.cwd() to md file`.
  * The relative path includes the name of the markdown file itself, but not the extension.
- * Then, it compiles and saves all d2 diagrams with the specified extension `ext` in that directory. It will then replace
- * the code blocks with a Image nodes: `![](${linkPath}/relative path from process.cwd() to md file/0.${ext})`
+ * Then, it compiles and saves all d2 diagrams with the specified extension `ext` in that directory.
+ * It will then replace the code blocks with an image.
+ * If `htmlImage` is true or the code block has some metadata, then it will make it an HTML image,
+ * otherwise it will be a Markdown image: `![](${linkPath}/relative path from process.cwd() to md file/0.${ext})`
  *
  * Example: assume we have a file `some/path/ex.md` containing:
  * ````
@@ -26,12 +43,13 @@ import { DEFAULT_OPTIONS } from "./defaults.js";
  * ```
  * ````
  *
- * `remarkD2` compiles the d2 code block into a file `static/d2/some/path/ex/0.svg`, and the code block becomes:
+ * `remarkD2` compiles the d2 code block into a file `static/d2/some/path/ex/0.svg`,
+ * and the code block becomes:
  *
  * ````
  * # Sample Markdown
  *
- * ![](/d2/some/path/ex/0.svg)
+ * ![d2 diagram](/d2/some/path/ex/0.svg)
  * ````
  *
  * @param {Object} opts Plugin options.
@@ -52,12 +70,11 @@ import { DEFAULT_OPTIONS } from "./defaults.js";
  *   - **NOTE: this is passed into the shell and can cause arbitrary command execution.**
  *
  * `htmlImage` -- replace code blocks with `<img /> tag` instead of `![]()`, default: `false`
- *   - Is ignored on a code block if the code block has any metadata (content after language selection)
+ *   - If a code block has metadata, regardless of the value of htmlImage, it is made into an HTML image
  *
- * `defaultImageAttrs` -- default attributes for the image, default: `{alt: "d2 diagram"}`
+ * `defaultImageAttrs` -- default attributes for the image, default: `{ alt: "d2 diagram" }`
  *   - The keys `title` and `alt`, if defined, are used for both the Markdown and HTML image types
  *   - All other attributes are only used if it is an HTML image
- *
  *
  * @returns Modified AST
  */
