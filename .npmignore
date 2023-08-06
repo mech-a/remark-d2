@@ -1,2 +1,5 @@
 test
 docs
+.eslintrc.json
+.prettierrc.json
+.github
