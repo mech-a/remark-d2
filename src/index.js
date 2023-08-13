@@ -92,8 +92,7 @@ export default function remarkD2(opts) {
     let count = 0;
     let relDir = "";
     if (file.path !== undefined || file.path !== null) {
-      const { dir, name } = path.parse(file.path);
-      relDir = path.join(dir, name);
+      relDir = path.join(file.dirname, file.stem);
       relDir = path.isAbsolute(file.path)
         ? path.relative(process.cwd(), relDir)
         : relDir;
