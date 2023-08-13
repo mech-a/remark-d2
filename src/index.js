@@ -94,7 +94,7 @@ export default function remarkD2(opts) {
     if (file.path !== undefined || file.path !== null) {
       relDir = path.join(file.dirname, file.stem);
       relDir = path.isAbsolute(file.path)
-        ? path.relative(process.cwd(), relDir)
+        ? path.relative(file.cwd, relDir)
         : relDir;
     }
     relDir = path.normalize(relDir);
