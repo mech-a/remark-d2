@@ -52,7 +52,7 @@ function sanitize(s) {
   return s;
 }
 
-function standardRun(fname, expected, plugOpts = {}) {
+async function standardRun(fname, expected, plugOpts = {}) {
   const inputPath = `test/resources/${fname}.md`;
   const inputPathNoExt = `test/resources/${fname}`;
   const outputPath = `test/resources/${fname}.ex.${expected}.md`;
@@ -74,11 +74,10 @@ function standardRun(fname, expected, plugOpts = {}) {
     "image compile path exists",
   );
 
-  // TODO: why doesn't this work?
-  // assert.isTrue(
-  //   fs.existsSync(path.join(plugOpts.compilePath, inputPathNoExt, "0.svg")),
-  //   "image exists",
-  // );
+  assert.isTrue(
+    fs.existsSync(path.join(plugOpts.compilePath, inputPathNoExt, "0.svg")),
+    "image exists",
+  );
 
   assert.strictEqual(
     sanitize(plugOutput),

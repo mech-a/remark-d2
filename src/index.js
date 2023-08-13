@@ -1,7 +1,7 @@
 import { visit } from "unist-util-visit";
 import { spawn } from "node:child_process";
 import path from "node:path";
-import { mkdirSync } from "node:fs";
+import { mkdir } from "node:fs";
 import { createImage, parseImageAttributeString } from "./util.js";
 import { DEFAULT_OPTIONS } from "./defaults.js";
 
@@ -76,7 +76,7 @@ import { DEFAULT_OPTIONS } from "./defaults.js";
  *
  * @returns Modified AST
  */
-export default function remarkD2(opts) {
+export default async function remarkD2(opts) {
   opts = { ...DEFAULT_OPTIONS, ...opts };
   // Verify options
   if (path.isAbsolute(opts.compilePath) && !opts.unsafe) {
@@ -101,7 +101,7 @@ export default function remarkD2(opts) {
     const compileDir = path.join(opts.compilePath, relDir);
     const linkDir = path.join(opts.linkPath, relDir);
 
-    mkdirSync(compileDir, { recursive: true }, (err) => {
+    mkdir(compileDir, { recursive: true }, (err) => {
       if (err) throw err;
     });
 
