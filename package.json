@@ -5,7 +5,8 @@
   "main": "./src/index.js",
   "type": "module",
   "scripts": {
-    "pretest": "rm -rf static",
+    "delete:static": "rm -rf static",
+    "pretest": "npm run delete:static",
     "test": "mocha"
   },
   "repository": {

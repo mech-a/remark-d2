@@ -1,5 +1,3 @@
-"use strict";
-
 import { SHORT_HAND } from "./defaults.js";
 
 /**

@@ -1,9 +1,7 @@
-"use strict";
-
 import { visit } from "unist-util-visit";
 import { spawn } from "node:child_process";
 import path from "node:path";
-import { existsSync, mkdirSync } from "node:fs";
+import { mkdirSync } from "node:fs";
 import { createImage, parseImageAttributeString } from "./util.js";
 import { DEFAULT_OPTIONS } from "./defaults.js";
 
@@ -82,12 +80,9 @@ export default function remarkD2(opts) {
   opts = { ...DEFAULT_OPTIONS, ...opts };
   // Verify options
   if (path.isAbsolute(opts.compilePath) && !opts.unsafe) {
-    console.error(
+    throw new Error(
       "remark-d2: compilePath is an absolute path and unsafe is false. No transformation done",
     );
-    return (tree) => {
-      tree;
-    };
   }
 
   opts.compilePath = path.normalize(opts.compilePath);
@@ -107,9 +102,9 @@ export default function remarkD2(opts) {
     const compileDir = path.join(opts.compilePath, relDir);
     const linkDir = path.join(opts.linkPath, relDir);
 
-    if (!existsSync(compileDir)) {
-      mkdirSync(compileDir, { recursive: true });
-    }
+    mkdirSync(compileDir, { recursive: true }, (err) => {
+      if (err) throw err;
+    });
 
     visit(tree, "code", (node) => {
       const { lang, value, meta } = node;
