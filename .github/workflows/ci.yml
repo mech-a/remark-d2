@@ -8,11 +8,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.runs-on }}
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js
+      - name: Use Node.js on ${{ matrix.runs-on }}
         uses: actions/setup-node@v3
         with:
           node-version: "20.x"
